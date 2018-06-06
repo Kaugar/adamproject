@@ -99,7 +99,9 @@
                     <input type="button" class="btn btn-secondary" onclick="generatePropertyText()" value="Ingatlan szövegrész generálás">
                     <br>
                 </form>
-                <form id="sourceForm" method="post" action="#">
+                <br>
+                <br>
+                <form id="sourceForm" class="form-control" method="post" action="#">
                     <fieldset id="sources">
                     </fieldset>
                 </form>
@@ -198,6 +200,7 @@
                 var buyerIdNum = document.getElementById("buyerIdNum" + i).value;
                 var buyerTaxId = document.getElementById("buyerTaxId" + i).value;
                 var buyerAddress = document.getElementById("buyerAddress" + i).value;
+                var buyerOwnership = document.getElementById("buyerOwnership" + i).value;
                 listOfBuyers[i] = {
                     name: buyerFirstName,
                     birthName: buyerBirthName,
@@ -206,7 +209,8 @@
                     mothersName: buyerMothersName,
                     id: buyerIdNum,
                     taxId: buyerTaxId,
-                    address: buyerAddress
+                    address: buyerAddress,
+                    ownership: buyerOwnership
                 };
             }
         }
@@ -231,32 +235,32 @@
             if (listOfSellers.length == 2) {
                 document.getElementById("sellerText").innerHTML = 'amely létrejött egyrészről ' + listOfSellers[1].name
                     .bold() +
-                    ' születési neve: ' + listOfSellers[1].birthName + ', születési hely, idő: ' + listOfSellers[1]
+                    ' (születési neve: ' + listOfSellers[1].birthName + ', születési hely, idő: ' + listOfSellers[1]
                     .birthPlace +
                     ', ' + listOfSellers[1].birthDate +
                     ', anyja neve: ' + listOfSellers[1].mothersName + ', személyi azonosító jel: ' + listOfSellers[
                         1].id +
-                    ', adóazonosító jel: ' + listOfSellers[1].taxId +
+                    ', adóazonosító jel: ' + listOfSellers[1].taxId + ') ' +
                     listOfSellers[1].address + 'szám alatti lakos, mint Eladó – továbbiakban: <b>Eladó</b> –, ';
             } else {
                 console.log(sellerCounter);
                 var multipleSellerText = 'amely létrejött egyrészről ' + listOfSellers[1].name.bold() +
-                    ' születési neve: ' + listOfSellers[1].birthName + ', születési hely, idő: ' + listOfSellers[1]
+                    ' (születési neve: ' + listOfSellers[1].birthName + ', születési hely, idő: ' + listOfSellers[1]
                     .birthPlace +
                     ', ' + listOfSellers[1].birthDate +
                     ', anyja neve: ' + listOfSellers[1].mothersName + ', személyi azonosító jell: ' + listOfSellers[
                         1].id +
-                    ', adóazonosító jel: ' + listOfSellers[1].taxId +
+                    ', adóazonosító jel: ' + listOfSellers[1].taxId + ') ' +
                     listOfSellers[1].address + 'szám alatti lakos, mint Eladó';
 
                 for (let j = 2; j < sellerCounter; j++) {
                     multipleSellerText = multipleSellerText.concat('<br/> és ' + listOfSellers[j].name.bold() +
-                        ' (születéskori név: ' +
+                        ' (születési név: ' +
                         listOfSellers[j].birthName + ', születési hely, idő: ' + listOfSellers[j].birthPlace +
                         ', ' + listOfSellers[j].birthDate +
                         ', anyja neve: ' + listOfSellers[j].mothersName + ', személyi azonosító jell: ' +
                         listOfSellers[j].id +
-                        ', adóazonosító jel: ' + listOfSellers[j].taxId +
+                        ', adóazonosító jel: ' + listOfSellers[j].taxId + ') ' +
                         listOfSellers[1].address +
                         'szám alatti lakos, mint Eladó<br/> – továbbiakban: <b>Eladók</b> –, ');
                 }
@@ -280,21 +284,21 @@
                     ' szám alatti lakos, mint Vevő – továbbiakban: <b>Vevő</b> - között az alulírott napon az alábbi feltételek mellett:'
             } else {
                 var multipleBuyerText = 'másrészről ' + listOfBuyers[1].name.bold() +
-                    ' születési neve: ' + listOfBuyers[1].birthName + ', születési hely, idő: ' + listOfBuyers[1].birthPlace +
+                    ' (születési neve: ' + listOfBuyers[1].birthName + ', születési hely, idő: ' + listOfBuyers[1].birthPlace +
                     ', ' + listOfBuyers[1].birthDate +
                     ', anyja neve: ' + listOfBuyers[1].mothersName + ', személyi azonosító jell: ' + listOfBuyers[1]
                     .id +
-                    ', adóazonosító jel: ' + listOfBuyers[1].taxId +
+                    ', adóazonosító jel: ' + listOfBuyers[1].taxId + ') ' +
                     listOfBuyers[1].address + 'szám alatti lakos, mint Vevő';
 
-                for (let j = 2; j < sellerCounter; j++) {
+                for (let j = 2; j < buyerCounter; j++) {
                     multipleBuyerText = multipleBuyerText.concat('<br/> és ' + listOfBuyers[j].name.bold() +
                         ' (születéskori név: ' +
                         listOfBuyers[j].birthName + ', születési hely, idő: ' + listOfBuyers[j].birthPlace +
                         ', ' + listOfBuyers[j].birthDate +
                         ', anyja neve: ' + listOfBuyers[j].mothersName + ', személyi azonosító jell: ' +
                         listOfBuyers[j].id +
-                        ', adóazonosító jel: ' + listOfBuyers[j].taxId +
+                        ', adóazonosító jel: ' + listOfBuyers[j].taxId + ') ' +
                         listOfBuyers[1].address +
                         'szám alatti lakos, mint Vevő<br/> – továbbiakban: <b>Vevők</b> – között – az alulírott napon és helyen az alábbi feltétekkel:'
                     );
@@ -340,19 +344,44 @@
                     ' hrsz. alatt felvett, ' + propertyArea + ' m2 alapterületű, ' + propertyType +
                     ' megnevezésű, természetben ' +
                     propertyAddress +
-                    ' szám alatti társasházi ingatlan az alapító okiratban meghatározott helyiségekkel együtt (továbbiakban: az Ingatlan). Felek rögzítik, hogy a ' +
+                    ' szám alatti társasházi ingatlan az alapító okiratban meghatározott helyiségekkel együtt (továbbiakban: <b>Ingatlan<b>). Felek rögzítik, hogy a ' +
                     propertyOwnerPageDate +
                     '-i tulajdoni lap tanúsága alapján az Ingatlant terheli 31080/2017.12.06. számon bejegyzett perindítás. Felek rögzítik, hogy a perindítás tényének törlése folyamatban van. Egyebekben az Ingatlan per-, teher- és igénymentes.<li/>'
             }
             if (listOfBuyers.length == 2 && listOfSellers.length == 2) {
                 document.getElementById("sellingText").innerHTML =
-                    'Eladó eladja Vevők pedig a megismert és megtekintett állapotban 1/1 arányban megvásárolja – adásvétel jogcímén – az Ingatlant ' +
+                    '<li>Eladó eladja Vevő pedig a megismert és megtekintett állapotban 1/1 arányban megvásárolja – adásvétel jogcímén – az Ingatlant ' +
                     propertyPrice + '- Ft, azaz ' + propertyPriceText +
-                    ' forint vételárért. Vevő a vételárat az alábbiak szerint köteles Eladónak megfizetni:'
+                    ' forint vételárért. Vevő a vételárat az alábbiak szerint köteles Eladónak megfizetni:</li>'
 
-            } else if (listOfSellers.length > 2 && listOfBuyers.length > 2)
+            } else if (listOfSellers.length > 2 && listOfBuyers.length > 2) {
+                var buyersOwnershipText = '' + listOfBuyers[1].ownership;
+                for (let i = 2; i < listOfBuyers.length; i++) {
+                    buyersOwnershipText = buyersOwnershipText.concat('-' + listOfBuyers[i].ownership);
+                }
                 document.getElementById("sellingText").innerHTML =
-                'Eladók eladják Vevők pedig a megismert és megtekintett állapotban 1/2-1/2 arányban megvásárolják – adásvétel jogcímén – az Ingatlant 25.000.000,- Ft, azaz huszonötmillió forint vételárért. Vevők a vételárat az alábbiak szerint kötelesek Eladóknak megfizetni:'
+                    '<li>Eladók eladják Vevők pedig a megismert és megtekintett állapotban ' + buyersOwnershipText +
+                    ' arányban megvásárolják – adásvétel jogcímén – az Ingatlant ' +
+                    propertyPrice + ',- Ft, azaz ' + propertyPriceText +
+                    ' forint vételárért. Vevők a vételárat az alábbiak szerint kötelesek Eladóknak megfizetni:</li>'
+            } else if (listOfSellers.length == 2 && listOfBuyers.length > 2) {
+                var buyersOwnershipText = '' + listOfBuyers[1].ownership;
+                for (let i = 2; i < listOfBuyers.length; i++) {
+                    buyersOwnershipText = buyersOwnershipText.concat('-' + listOfBuyers[i].ownership);
+                }
+                document.getElementById("sellingText").innerHTML =
+                    '<li>Eladó eladja Vevők pedig a megismert és megtekintett állapotban ' + buyersOwnershipText +
+                    ' arányban megvásárolja – adásvétel jogcímén – az Ingatlant ' +
+                    propertyPrice + '- Ft, azaz ' + propertyPriceText +
+                    ' forint vételárért. Vevők a vételárat az alábbiak szerint köteles Eladónak megfizetni:</li>'
+
+            } else if (listOfBuyers.length > 2 && listOfSellers.length == 2) {
+                document.getElementById("sellingText").innerHTML =
+                    '<li>Eladók eladják Vevő pedig a megismert és megtekintett állapotban 1/1 arányban megvásárolja – adásvétel jogcímén – az Ingatlant ' +
+                    propertyPrice + '- Ft, azaz ' + propertyPriceText +
+                    ' forint vételárért. Vevők a vételárat az alábbiak szerint kötelesek Eladónak megfizetni:</li>'
+
+            }
         }
 
         function generateSourceText() {
@@ -405,7 +434,7 @@
                 ':</h3><div class="row"><input type="hidden" id="sellerId" value=' + sellerCounter +
                 '"><div class="col" ><label >Név:</label><input class="form-control" type="text" id="sellerFirstName' +
                 sellerCounter +
-                '" placeholder=""></div><div class="col"><label>Lánykori név:</label> <input class="form-control" type="text" id="sellerBirthName' +
+                '" placeholder=""></div><div class="col"><label>Születési név:</label> <input class="form-control" type="text" id="sellerBirthName' +
                 sellerCounter +
                 '" placeholder=""></div></div><div class="row"><div class="col"><label>Születési hely:</label><input class="form-control" type="text" id="sellerBirthPlace' +
                 sellerCounter +
@@ -421,7 +450,7 @@
                 sellerCounter +
                 '" placeholder=""></div></div><div class="row"> <div class="col"><label>Cím(Irsz. Város, utca, hsz): </label><input class="form-control" type="text" id="sellerAddress' +
                 sellerCounter +
-                '" placeholder=""></div></div></div><br><br><button id="remove" type="button" class="btn btn-danger" >Eladó eltávolítása</button></div></div><br>'
+                '" placeholder=""></div></div><br><br><button id="remove" type="button" class="btn btn-danger" >Eladó eltávolítása</button></div></div></div><br>'
             );
             sellerCounter++;
             return false; //prevent form submission
@@ -432,13 +461,18 @@
             sellerCounter--;
             return false; //prevent form submission
         });
+        $(document).ready(function () {
+            $("#removeSeller").click(function () {
+                $("#seller-form1").remove();
+            });
+        });
 
         $('#add_buyer').on('click', function () {
             $('#buyers').append('<div class="buyer-form"><br><h3>Vevő ' + buyerCounter +
                 ':</h3><div class="row"><input type="hidden" id="buyerId" value=' + buyerCounter +
                 '"><div class="col" ><label >Név:</label><input class="form-control" type="text" id="buyerFirstName' +
                 buyerCounter +
-                '" placeholder=""></div><div class="col"><label>Lánykori név:</label> <input class="form-control" type="text" id="buyerBirthName' +
+                '" placeholder=""></div><div class="col"><label>Születési név:</label> <input class="form-control" type="text" id="buyerBirthName' +
                 buyerCounter +
                 '" placeholder=""></div></div><div class="row"><div class="col"><label>Születési hely:</label><input class="form-control" type="text" id="buyerBirthPlace' +
                 buyerCounter +
@@ -454,20 +488,21 @@
                 buyerCounter +
                 '" placeholder=""></div></div><div class="row"> <div class="col"><label>Cím(Irsz. Város, utca, hsz): </label><input class="form-control" type="text" id="buyerAddress' +
                 buyerCounter +
-                '" placeholder=""></div></div></div><br><br><button id="remove" type="button" class="btn btn-danger" >Vevő eltávolítása</button></div></div><br>'
+                '" placeholder=""></div></div><br><br><button id="removeBuyer" type="button" class="btn btn-danger" >Vevő eltávolítása</button></div></div></div><br>'
             );
             buyerCounter++;
             return false; //prevent form submission
         });
 
-        $('#buyers').on('click', '.remove', function () {
+        $('#buyers').on('click', '#removeBuyer', function () {
             $(this).parent().remove();
             buyerCounter--;
             return false; //prevent form submission
         });
 
         $('#add_source').on('click', function () {
-            $('#sources').append('<br><br><div class="sourcesForm"> <h2>Finanszírozás' + sourceCounter +
+            $('#sources').append('<br><br><div class="sourcesForm" class="form-control"> <h2>Finanszírozás' +
+                sourceCounter +
                 ':</h2><input type="hidden" id="sourceId" panelid="' + sourceCounter + '">' +
                 '<div id="panel" class="btn-group" role="group" aria-label="Basic example">' +
                 '<button type="button" id="own_Source" class="btn btn-primary" panelid1="' +
@@ -489,12 +524,12 @@
                 sourceCounter +
                 '" placeholder=""><label>Csok nagysága: </label><input class="form-control" type="text" id="sourceAmount' +
                 sourceCounter +
-                '" placeholder=""></div><br><br><button class="btn btn-danger" id="remove">Finanszírozási forma eltávolítása</button><br><br></div>'
+                '" placeholder=""></div><br><br><button class="btn btn-danger" id="removeSeller">Finanszírozási forma eltávolítása</button><br><br></div>'
             );
             sourceCounter++;
             return false; //prevent form submission
         });
-        $('#sources').on('click', '#remove', function () {
+        $('#sources').on('click', '#removeSeller', function () {
             $(this).parent().remove();
             buyerCounter--;
             return false; //prevent form submission
