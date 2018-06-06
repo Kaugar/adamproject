@@ -61,10 +61,9 @@
                             </fieldset>
                         </div>
                         <br>
-                        <br>
                     </form>
-                    <input type="button" id="add_seller" value="Eladó hozzáadása">
-                    <input type="button" onclick="generateSellerText()" value="Eladó szövegrész generálás">
+                    <input type="button" class="btn btn-secondary" id="add_seller" value="Eladó hozzáadása">
+                    <input type="button" class="btn btn-secondary" onclick="generateSellerText()" value="Eladó szövegrész generálás">
                 </div>
                 <br>
                 <div>
@@ -74,40 +73,37 @@
                             </fieldset>
                         </div>
                         <br>
-                        <br>
                     </form>
-                    <input type="button" id="add_buyer" value="Vevő hozzáadása">
-                    <input type="button" onclick="generateBuyerText()" value="Vevő szövegrész generálás">
+                    <input type="button" class="btn btn-secondary" id="add_buyer" value="Vevő hozzáadása">
+                    <input type="button" class="btn btn-secondary" onclick="generateBuyerText()" value="Vevő szövegrész generálás">
+                    <br>
                     <br>
                 </div>
                 <h2>Ingatlan adatai:</h2>
-                <form id="propertyForm">
+                <form id="propertyForm" class="form-control">
                     Hrsz:
-                    <input type="text" id="propertyAreaNumber" placeholder="">
-                    <br> Terület:
-                    <input type="text" id="propertyArea" placeholder="">
-                    <br> Típusa:
-                    <input type="text" id="propertyType" placeholder="">
-                    <br> Cím:
-                    <input type="text" id="propertyAddress" placeholder="">
-                    <br> Tul. lap dátum:
-                    <input type="text" id="propertyOwnerPageDate" placeholder="">
-                    <br> Ár:
-                    <input type="number" id="propertyPrice" placeholder="">
-                    <br> Ár forintban:
-                    <input type="text" id="propertyPriceText" placeholder="">
+                    <input type="text" class="form-control" id="propertyAreaNumber" placeholder="">
+                    <lable>Terület:</lable>
+                    <input type="text" class="form-control" id="propertyArea" placeholder="">
+                    <lable>Típusa:</lable>
+                    <input type="text" class="form-control" id="propertyType" placeholder="">
+                    <lable>Cím:</lable>
+                    <input type="text" class="form-control" id="propertyAddress" placeholder="">
+                    <lable>Tul. lap dátum:</lable>
+                    <input type="text" class="form-control" id="propertyOwnerPageDate" placeholder="">
+                    <lable>Ár:</lable>
+                    <input type="number" class="form-control" id="propertyPrice" placeholder="">
+                    <lable>Ár forintban:</lable>
+                    <input type="text" class="form-control" id="propertyPriceText" placeholder="">
                     <br>
-                    <br>
-                    <input type="button" onclick="generatePropertyText()" value="Ingatlan szövegrész generálás">
-                    <br>
+                    <input type="button" class="btn btn-secondary" onclick="generatePropertyText()" value="Ingatlan szövegrész generálás">
                     <br>
                 </form>
                 <form id="sourceForm" method="post" action="#">
                     <fieldset id="sources">
                     </fieldset>
                 </form>
-                <input type="button" id="add_source" value="Finanszírozási forma hozzáadása">
-                <button class="remove">Finanszírozási forma eltávolítása</button>
+                <input type="button" id="add_source" class="btn btn-secondary" value="Finanszírozási forma hozzáadása">
                 <br>
                 <br>
                 <input type="button" onclick="generateSourceText()" value="Finanszírozás szövegrész generálás">
@@ -471,32 +467,34 @@
         });
 
         $('#add_source').on('click', function () {
-            $('#sources').append('<div class="sourcesForm"> <h2>Finanszírozás' + sourceCounter +
+            $('#sources').append('<br><br><div class="sourcesForm"> <h2>Finanszírozás' + sourceCounter +
                 ':</h2><input type="hidden" id="sourceId" panelid="' + sourceCounter + '">' +
                 '<div id="panel" class="btn-group" role="group" aria-label="Basic example">' +
-                '<button type="button" id="own_Source" class="btn btn-secondary" panelid1="' +
+                '<button type="button" id="own_Source" class="btn btn-primary" panelid1="' +
                 sourceCounter + '">Önerő</button>' +
-                '<button type="button" id="loan" class="btn btn-secondary" panelid1="' + sourceCounter +
+                '<button type="button" id="loan" class="btn btn-primary" panelid1="' + sourceCounter +
                 '">Hitel</button>' +
-                '<button type="button" id="csok" class="btn btn-secondary" panelid1="' + sourceCounter +
+                '<button type="button" id="csok" class="btn btn-primary" panelid1="' + sourceCounter +
                 '">CSOK</button></div>' +
                 '<div style="display:none" id="form_ownSource' + sourceCounter +
                 '" class="col"><label>Összeg: </label><input class="form-control" type="text" id="sourceAmount' +
                 sourceCounter +
                 '" placeholder=""></div><div style="display:none" id="form_loan' + sourceCounter +
-                '" class="col"><label>Hitelintézet: </label><input class="form-control" type="text" id="loanAmount' +
+                '" class="col"><label>Bank: </label><input class="form-control" type="text" id="bankName' +
+                sourceCounter +
+                '" placeholder=""><label>Számlaszám: </label><input class="form-control" type="text" id="bankName' +
                 sourceCounter +
                 '" placeholder=""></div><div style="display:none" id="form_csok' + sourceCounter +
                 '" class="col"><label>Hitelintézet: </label><input class="form-control" type="text" id="bankName' +
                 sourceCounter +
                 '" placeholder=""><label>Csok nagysága: </label><input class="form-control" type="text" id="sourceAmount' +
                 sourceCounter +
-                '" placeholder=""></div></div>'
+                '" placeholder=""></div><br><br><button class="btn btn-danger" id="remove">Finanszírozási forma eltávolítása</button><br><br></div>'
             );
             sourceCounter++;
             return false; //prevent form submission
         });
-        $('#sources').on('click', '.remove', function () {
+        $('#sources').on('click', '#remove', function () {
             $(this).parent().remove();
             buyerCounter--;
             return false; //prevent form submission
