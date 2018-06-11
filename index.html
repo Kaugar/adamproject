@@ -83,17 +83,17 @@
                 <form id="propertyForm" class="form-control">
                     Hrsz:
                     <input type="text" class="form-control" id="propertyAreaNumber" placeholder="">
-                    <lable>Terület:</lable>
+                    Terület:
                     <input type="text" class="form-control" id="propertyArea" placeholder="">
-                    <lable>Típusa:</lable>
+                    Típusa:
                     <input type="text" class="form-control" id="propertyType" placeholder="">
-                    <lable>Cím:</lable>
+                    Cím:
                     <input type="text" class="form-control" id="propertyAddress" placeholder="">
-                    <lable>Tul. lap dátum:</lable>
+                    Tul. lap dátum:
                     <input type="text" class="form-control" id="propertyOwnerPageDate" placeholder="">
-                    <lable>Ár:</lable>
+                    Ár:
                     <input type="number" class="form-control" id="propertyPrice" placeholder="">
-                    <lable>Ár forintban:</lable>
+                    Ár forintban:
                     <input type="text" class="form-control" id="propertyPriceText" placeholder="">
                     <br>
                     <input type="button" class="btn btn-secondary" onclick="generatePropertyText()" value="Ingatlan szövegrész generálás">
@@ -105,20 +105,18 @@
                     <fieldset id="sources">
                     </fieldset>
                 </form>
+                <br>
                 <input type="button" id="add_source" class="btn btn-secondary" value="Finanszírozási forma hozzáadása">
                 <br>
                 <br>
-                <input type="button" onclick="generateSourceText()" value="Finanszírozás szövegrész generálás">
+                <input type="button" class="btn btn-secondary" onclick="generateSourceText()" value="Finanszírozás szövegrész generálás">
                 <br>
-
+                <br>
                 <form id="contract">
                     Dátum:
-                    <input type="date" id="dateOfContract" placeholder="">
-                    <br> Ügyvéd neve:
-                    <input type="text" id="nameOfLawyer" placeholder="">
+                    <input type="date" class="form-control" id="dateOfContract" placeholder="">
                     <br>
-                    <br>
-                    <input type="button" onclick="genarateContract()" value="Szerződés generálás">
+                    <input type="button" class="btn btn-secondary" onclick="genarateContract()" value="Szerződés generálás">
                     <br>
                     <br>
                 </form>
@@ -157,7 +155,7 @@
         var buyerCounter = 1;
         var listOfSources = [];
         var sourceCounter = 1;
-
+        var selectedSeller = '';
 
         function createSellers() {
 
@@ -216,16 +214,51 @@
         }
 
         function createSources() {
-
             //Source variables
             for (let i = 1; i < sourceCounter; i++) {
-                var sourceName = document.getElementById("sourceName" + i).value;
-                var sourceAmount = document.getElementById("sourceAmount" + i).value;
-                var paymentDate = document.getElementById("paymentDate" + i).value;
+                var sourcePaymentDate = document.getElementById("sourcePaymentDate" + i).value;
+                var ownSourceAmount = document.getElementById("ownSourceAmount" + i).value;
+                var ownSourceAmountText = document.getElementById("ownSourceAmountText" + i).value;
+                var loanAmount = document.getElementById("loanAmount" + i).value;
+                var bankName = document.getElementById("bankName" + i).value;
+                var ownSourceBankAccountNumber = document.getElementById("ownSourceBankAccountNumber" + i).value;
+                var bankAccountOwner = document.getElementById("ownSourceBankAccountNumber" + i).value;
+                var ownBankName = document.getElementById("ownSourceBankName" + i).value;
+                var loanAmountText = document.getElementById("loanAmountText" + i).value;
+                var csokAmount = document.getElementById("csokAmount" + i).value;
+                var loanPaymentDate = document.getElementById("loanPaymentDate" + i).value;
+                var csokAmount = document.getElementById("csokAmount" + i).value;
+                var csokAmountText = document.getElementById("csokAmountText" + i).value;
+                var csokPaymentDate = document.getElementById("csokPaymentDate" + i).value;
+                var csokBankName = document.getElementById("csokBankName" + i).value;
+                var csokBankAccountOwner = document.getElementById("csokBankAccountOwner" + i).value;
+                var csokBankAccountNumber = document.getElementById("csokBankAccountNumber" + i).value;
+                var buyerLoanBankNumber = document.getElementById("buyerLoanBankNumber" + i).value;
+                var loanSellerName = document.getElementById("loanSellerName" + i).value;
+                var loanBankAccountNumber = document.getElementById("loanBankAccountNumber" + i).value;
+                var loanSellerBankName = document.getElementById("loanSellerBankName" + i).value;
                 listOfSources[i] = {
-                    sourceName: sourceName,
-                    sourceAmount: sourceAmount,
-                    paymentDate: paymentDate
+                    type : listOfSources[i].type,
+                    sourcePaymentDate: sourcePaymentDate,
+                    loanAmount: loanAmount,
+                    loanAmountText: loanAmountText,
+                    loanPaymentDate: loanPaymentDate,
+                    ownSourceBankAccountNumber: ownSourceBankAccountNumber,
+                    bankName: bankName,
+                    ownBankName: ownBankName,
+                    ownSourceAmountText: ownSourceAmountText,
+                    ownSourceAmount: ownSourceAmount,
+                    bankAccountOwner: bankAccountOwner,
+                    csokAmount: csokAmount,
+                    csokAmountText: csokAmountText,
+                    csokPaymentDate: csokPaymentDate,
+                    csokBankName: csokBankName,
+                    csokBankAccountNumber: csokBankAccountNumber,
+                    csokBankAccountOwner: csokBankAccountOwner,
+                    buyerLoanBankNumber: buyerLoanBankNumber,
+                    loanSellerName: loanSellerName,
+                    loanBankAccountNumber: loanBankAccountNumber,
+                    loanSellerBankName: loanSellerBankName
                 };
             }
         }
@@ -243,7 +276,6 @@
                     ', adóazonosító jel: ' + listOfSellers[1].taxId + ') ' +
                     listOfSellers[1].address + 'szám alatti lakos, mint Eladó – továbbiakban: <b>Eladó</b> –, ';
             } else {
-                console.log(sellerCounter);
                 var multipleSellerText = 'amely létrejött egyrészről ' + listOfSellers[1].name.bold() +
                     ' (születési neve: ' + listOfSellers[1].birthName + ', születési hely, idő: ' + listOfSellers[1]
                     .birthPlace +
@@ -344,7 +376,7 @@
                     ' hrsz. alatt felvett, ' + propertyArea + ' m2 alapterületű, ' + propertyType +
                     ' megnevezésű, természetben ' +
                     propertyAddress +
-                    ' szám alatti társasházi ingatlan az alapító okiratban meghatározott helyiségekkel együtt (továbbiakban: <b>Ingatlan<b>). Felek rögzítik, hogy a ' +
+                    ' szám alatti társasházi ingatlan az alapító okiratban meghatározott helyiségekkel együtt (továbbiakban: <b>Ingatlan</b>). Felek rögzítik, hogy a ' +
                     propertyOwnerPageDate +
                     '-i tulajdoni lap tanúsága alapján az Ingatlant terheli 31080/2017.12.06. számon bejegyzett perindítás. Felek rögzítik, hogy a perindítás tényének törlése folyamatban van. Egyebekben az Ingatlan per-, teher- és igénymentes.<li/>'
             }
@@ -375,7 +407,7 @@
                     propertyPrice + '- Ft, azaz ' + propertyPriceText +
                     ' forint vételárért. Vevők a vételárat az alábbiak szerint köteles Eladónak megfizetni:</li>'
 
-            } else if (listOfBuyers.length > 2 && listOfSellers.length == 2) {
+            } else if (listOfSellers.length > 2 && listOfBuyers.length == 2) {
                 document.getElementById("sellingText").innerHTML =
                     '<li>Eladók eladják Vevő pedig a megismert és megtekintett állapotban 1/1 arányban megvásárolja – adásvétel jogcímén – az Ingatlant ' +
                     propertyPrice + '- Ft, azaz ' + propertyPriceText +
@@ -386,22 +418,38 @@
 
         function generateSourceText() {
             createSources();
-            if (listOfSources.length == 2) {
-                document.getElementById("sourceText").innerHTML = '<li>Vevők ' + listOfSources[1].paymentDate +
-                    '-ig a vételárból 9.700.000,- Ft, azaz kilencmillió-hétszázezer forint vételárrészletet önerőből Öveges Sándor Eladónak Eladó OTP Banknál vezetett 11773487-01151439 számú bankszámlájára történő utalás útján megfizetnek. Eladók ezen bankszámlára történő teljesítést a vételár-hátralék saját kezeikhez történő megfizetésének ismerik el.</li>'
-            } else if (listOfSources.length > 2) {
-                var sourceMultiText = '<ol>';
-                for (let i = 1; i < listOfSources.length; i++) {
-                    sourceMultiText = sourceMultiText.concat('<li>Vevők ' + listOfSources[i].paymentDate +
-                        '-ig a vételárból ' +
-                        listOfSources[i].sourceAmount +
-                        ',- Ft, azaz kilencmillió-hétszázezer forint vételárrészletet önerőből Öveges Sándor Eladónak Eladó OTP Banknál vezetett 11773487-01151439 számú bankszámlájára történő utalás útján megfizetnek. Eladók ezen bankszámlára történő teljesítést a vételár-hátralék saját kezeikhez történő megfizetésének ismerik el.</li>'
-                    )
-
-                }
-                sourceMultiText.concat('</ol>')
-                document.getElementById("sourceText").innerHTML = sourceMultiText;
+            var buyers = (listOfBuyers.length > 2) ? 'Vevő' : 'Vevők';
+            var sellers = (listOfSellers.length > 2) ? 'Eladó' : 'Eladók';
+            var sourceText = '';
+            if (listOfSources.length > 2) {
+                sourceText = sourceText.concat('<ol>')
             }
+            for (let i = 1; i < listOfSources.length; i++) {
+                if (listOfSources[i].ownSourceAmount && listOfSources[i].type === 'ownSource') {
+                    sourceText = sourceText.concat('<li>'+buyers + listOfSources[i].paymentDate +
+                        '-ig a vételárból ' + listOfSources[i].ownSourceAmount + ',- Ft, azaz ' + listOfSources[i].ownSourceAmountText +
+                        ' forint <b>vételárrészletet</b> önerőből ' + listOfSources[i].bankAccountOwner + 'Eladónak Eladó ' + listOfSources[i].ownBankName +
+                        ' Banknál vezetett '+listOfSources[i].ownSourceBankAccountNumber+' számú bankszámlájára történő utalás útján megfizetnek. '+sellers+' ezen bankszámlára történő teljesítést a vételár-hátralék saját kezeikhez történő megfizetésének ismerik el.</li>')
+                } else if (listOfSources[i].loanAmount && listOfSources[i].type === 'loan') {
+                    sourceText = sourceText.concat('<li>'+buyers + listOfSources[i].loanPaymentDate +
+                        '-ig a vételárból ' + listOfSources[i].loanAmount + ',- Ft, azaz ' + listOfSources[i].loanAmountText +
+                        ' forint <b>vételárrészletet</b> az '+sellers+'nak okiratszerkesztő, letéteményes ügyvéd útján megfizetni a(z) '+listOfSources[i].bankName+'-től igényelt kölcsönből akként, hogy a pénzintézet eljáró ügyvéd '+listOfSources[i].buyerLoanBankNumber+' számú letéti számlájára folyósítja a kölcsönt, aki '+listOfSources[i].loanSellerName+' Eladó '+listOfSources[i].loanSellerBankName+'-nál található '+listOfSources[i].loanBankAccountNumber+' számú bankszámlájára utalja tovább a vételárhátralékot. </li>');
+                } else if (listOfSources[i].csokAmount && listOfSources[i].type === 'csok') {
+                    sourceText = sourceText.concat('<li>'+buyers + listOfSources[i].csokPaymentDate +
+                        '-ig a vételárból ' + listOfSources[i].csokAmount + ',- Ft, azaz ' + listOfSources[i].csokAmountText +
+                        ' forint <b>vételárrészletet</b> az ' + sellers + 'nak az okiratszerkesztő, letéteményes ügyvéd útján megfizetni a Családok Otthonteremtési Kedvezményéből (CSOK) történő finanszírozás útján akként, hogy a CSOK az '
+                        +listOfSources[i].csokBankName +'által kerül folyósításra, amit '+listOfSources[i].csokBankAccountOwner +' Eladónak Eladó ' + listOfSources[i].ownBankName +
+                        ' Banknál vezetett '+listOfSources[i].csokBankAccountNumber+' számú bankszámlájára történő utalás útján megfizetnek. </li>');
+                }
+            }
+            if (listOfSources.length > 2) {
+                sourceText = sourceText.concat('</ol>')
+            }
+            document.getElementById("sourceText").innerHTML = sourceText;
+            //$(document).on('change', '#drp', function () {
+            //    $("#answer").text(this.value)
+            //    selectedSeller = $("#answer").val(this.value);
+            //});
         }
 
         function genarateContract() {
@@ -429,6 +477,7 @@
 
         }
 
+
         $('#add_seller').on('click', function () {
             $('#sellers').append('<div class="seller-form"><br><h3>Eladó ' + sellerCounter +
                 ':</h3><div class="row"><input type="hidden" id="sellerId" value=' + sellerCounter +
@@ -450,21 +499,16 @@
                 sellerCounter +
                 '" placeholder=""></div></div><div class="row"> <div class="col"><label>Cím(Irsz. Város, utca, hsz): </label><input class="form-control" type="text" id="sellerAddress' +
                 sellerCounter +
-                '" placeholder=""></div></div><br><br><button id="remove" type="button" class="btn btn-danger" >Eladó eltávolítása</button></div></div></div><br>'
+                '" placeholder=""></div></div><br><br><button id="removeSeller" type="button" class="btn btn-danger" >Eladó eltávolítása</button></div></div></div><br>'
             );
             sellerCounter++;
             return false; //prevent form submission
         });
 
-        $('#sellers').on('click', '#remove', function () {
+        $('#sellers').on('click', '#removeSeller', function () {
             $(this).parent().remove();
             sellerCounter--;
             return false; //prevent form submission
-        });
-        $(document).ready(function () {
-            $("#removeSeller").click(function () {
-                $("#seller-form1").remove();
-            });
         });
 
         $('#add_buyer').on('click', function () {
@@ -501,7 +545,7 @@
         });
 
         $('#add_source').on('click', function () {
-            $('#sources').append('<br><br><div class="sourcesForm" class="form-control"> <h2>Finanszírozás' +
+            $('#sources').append('<div class="sourcesForm" class="form-control"> <h2>Finanszírozás' +
                 sourceCounter +
                 ':</h2><input type="hidden" id="sourceId" panelid="' + sourceCounter + '">' +
                 '<div id="panel" class="btn-group" role="group" aria-label="Basic example">' +
@@ -512,35 +556,77 @@
                 '<button type="button" id="csok" class="btn btn-primary" panelid1="' + sourceCounter +
                 '">CSOK</button></div>' +
                 '<div style="display:none" id="form_ownSource' + sourceCounter +
-                '" class="col"><label>Összeg: </label><input class="form-control" type="text" id="sourceAmount' +
+                '" class="col"><label>Határidő: </label><input class="form-control" type="text" id="sourcePaymentDate' +
                 sourceCounter +
-                '" placeholder=""></div><div style="display:none" id="form_loan' + sourceCounter +
+                '" placeholder=""><label>Összeg: </label><input class="form-control" type="text" id="ownSourceAmount' +
+                sourceCounter +
+                '" placeholder=""><label>Összeg szöveg: </label><input class="form-control" type="text" id="ownSourceAmountText' +
+                sourceCounter +
+                '" placeholder=""><label>Bank neve: </label><input class="form-control" type="text" id="ownSourceBank' +
+                sourceCounter +
+                '" placeholder=""><label>Tulajdonos számlaszám: </label><input class="form-control" type="text" id="ownSourceBankAccountNumber' +
+                sourceCounter +
+                '" placeholder=""><label>Számlatulajdonos: </label><input class="form-control" type="text" id="bankAccountOwner' +
+                sourceCounter +
+                '" placeholder=""></div><div style="display:none" id="form_loan' +
+                sourceCounter +
                 '" class="col"><label>Bank: </label><input class="form-control" type="text" id="bankName' +
                 sourceCounter +
-                '" placeholder=""><label>Számlaszám: </label><input class="form-control" type="text" id="bankName' +
+                '" placeholder=""><label>Hitelösszeg: </label><input class="form-control" type="text" id="loanAmount' +
+                sourceCounter +
+                '" placeholder=""><label>Hitelösszeg szöveg: </label><input class="form-control" type="text" id="loanAmountText' +
+                sourceCounter +
+                '" placeholder=""><label>Határidő: </label><input class="form-control" type="text" id="loanPaymentDate' +
+                sourceCounter +
+                '" placeholder=""><label>Vevő Számlaszám: </label><input class="form-control" type="text" id="buyerLoanBankNumber' +
+                sourceCounter +
+                '" placeholder=""><label>Számlatulajdonos: </label><input class="form-control" type="text" id="loanSellerName' +
+                sourceCounter +
+                '" placeholder=""><label>Bank: </label><input class="form-control" type="text" id="loanSellerBankName' +
+                sourceCounter +
+                '" placeholder=""><label>Számlaszám: </label><input class="form-control" type="text" id="loanBankAccountNumber' +
                 sourceCounter +
                 '" placeholder=""></div><div style="display:none" id="form_csok' + sourceCounter +
-                '" class="col"><label>Hitelintézet: </label><input class="form-control" type="text" id="bankName' +
+                '" class="col"><label>Hitelintézet: </label><input class="form-control" type="text" id="csokBankName' +
                 sourceCounter +
-                '" placeholder=""><label>Csok nagysága: </label><input class="form-control" type="text" id="sourceAmount' +
+                '" placeholder=""><label>Csok összeg: </label><input class="form-control" type="text" id="csokAmount' +
                 sourceCounter +
-                '" placeholder=""></div><br><br><button class="btn btn-danger" id="removeSeller">Finanszírozási forma eltávolítása</button><br><br></div>'
+                '" placeholder=""><label>Csok összeg szöveg: </label><input class="form-control" type="text" id="csokAmountText' +
+                sourceCounter +
+                '" placeholder=""><label>Határidő: </label><input class="form-control" type="text" id="csokPaymentDate' +
+                sourceCounter +
+                '" placeholder=""><label>Számlatulajdonos: </label><input class="form-control" type="text" id="csokBankAccountOwner' +
+                sourceCounter +
+                '" placeholder=""><label>Számlaszám: </label><input class="form-control" type="text" id="csokBankAccountNumber' +
+                sourceCounter +
+                '" placeholder=""><label>Bank neve: </label><input class="form-control" type="text" id="ownSourceBank' +
+                sourceCounter +
+                '" placeholder=""></div><br><br><button id="removeSource" class="btn btn-danger">Finanszírozási forma eltávolítása</button><br><br></div></div></div>'
             );
             sourceCounter++;
             return false; //prevent form submission
         });
-        $('#sources').on('click', '#removeSeller', function () {
+        $('#sources').on('click', '#removeSource', function () {
             $(this).parent().remove();
-            buyerCounter--;
+            sourceCounter--;
             return false; //prevent form submission
         });
 
         $("body").ready(function () {
             $("body").on('click', '#own_Source', function () {
                 var sourceId = $(this).attr('panelid1');
+                listOfSources[sourceId]= {type: 'ownSource'};
+                console.log(listOfSources[1].type);
                 $("#form_ownSource" + sourceId).show();
                 $("#form_loan" + sourceId).hide();
                 $("#form_csok" + sourceId).hide();
+                var listOfSellers1 = listOfSellers.slice(1);
+                var options = $.map(listOfSellers1, function (item) {
+                    return $('<option>', {
+                        text: item.name
+                    });
+                });
+                $("#drp").empty().append(options);
             });
             return false;
         });
@@ -550,6 +636,7 @@
                 $("#form_ownSource" + sourceId).hide();
                 $("#form_loan" + sourceId).show();
                 $("#form_csok" + sourceId).hide();
+                listOfSources[sourceId]= {type: 'loan'};
             });
             return false;
         });
@@ -559,6 +646,7 @@
                 $("#form_ownSource" + sourceId).hide();
                 $("#form_loan" + sourceId).hide();
                 $("#form_csok" + sourceId).show();
+                listOfSources[sourceId]= {type: 'csok'};
             });
             return false;
         });
