@@ -15,7 +15,6 @@
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <script src="js/mustache.min.js"></script>
 </head>
 <style>
     OL {
@@ -239,7 +238,7 @@
                 var loanSellerBankName = document.getElementById("loanSellerBankName" + i).value;
                 listOfSources[i] = {
                     type : listOfSources[i].type,
-                    sourcePaymentDate: sourcePaymentDate,
+                    paymentDate: sourcePaymentDate,
                     loanAmount: loanAmount,
                     loanAmountText: loanAmountText,
                     loanPaymentDate: loanPaymentDate,
@@ -418,15 +417,15 @@
 
         function generateSourceText() {
             createSources();
-            var buyers = (listOfBuyers.length > 2) ? 'Vevő' : 'Vevők';
-            var sellers = (listOfSellers.length > 2) ? 'Eladó' : 'Eladók';
+            var buyers = (listOfBuyers.length > 2) ? 'Vevők' : 'Vevő';
+            var sellers = (listOfSellers.length > 2) ? 'Eladók' : 'Eladó';
             var sourceText = '';
             if (listOfSources.length > 2) {
                 sourceText = sourceText.concat('<ol>')
             }
             for (let i = 1; i < listOfSources.length; i++) {
                 if (listOfSources[i].ownSourceAmount && listOfSources[i].type === 'ownSource') {
-                    sourceText = sourceText.concat('<li>'+buyers + listOfSources[i].paymentDate +
+                    sourceText = sourceText.concat('<li>'+buyers +' '+ listOfSources[i].paymentDate +
                         '-ig a vételárból ' + listOfSources[i].ownSourceAmount + ',- Ft, azaz ' + listOfSources[i].ownSourceAmountText +
                         ' forint <b>vételárrészletet</b> önerőből ' + listOfSources[i].bankAccountOwner + 'Eladónak Eladó ' + listOfSources[i].ownBankName +
                         ' Banknál vezetett '+listOfSources[i].ownSourceBankAccountNumber+' számú bankszámlájára történő utalás útján megfizetnek. '+sellers+' ezen bankszámlára történő teljesítést a vételár-hátralék saját kezeikhez történő megfizetésének ismerik el.</li>')
@@ -562,7 +561,7 @@
                 sourceCounter +
                 '" placeholder=""><label>Összeg szöveg: </label><input class="form-control" type="text" id="ownSourceAmountText' +
                 sourceCounter +
-                '" placeholder=""><label>Bank neve: </label><input class="form-control" type="text" id="ownSourceBank' +
+                '" placeholder=""><label>Bank neve: </label><input class="form-control" type="text" id="ownSourceBankName' +
                 sourceCounter +
                 '" placeholder=""><label>Tulajdonos számlaszám: </label><input class="form-control" type="text" id="ownSourceBankAccountNumber' +
                 sourceCounter +
